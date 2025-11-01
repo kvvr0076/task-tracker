@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Tracker - Stay Organized</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-tasks"></i> Task Tracker</h1>
+      <p>Stay organized and productive with your daily tasks</p>
+    </header>
+
+    <div class="task-input-container">
+      <form class="task-input-form" id="taskForm">
+        <input type="text" class="task-input" id="taskInput" placeholder="Add a new task..." required>
+        <select class="task-priority" id="taskPriority">
+          <option value="low">Low Priority</option>
+          <option value="medium" selected>Medium Priority</option>
+          <option value="high">High Priority</option>
+        </select>
+        <button type="submit" class="btn">
+          <i class="fas fa-plus"></i> Add Task
+        </button>
+      </form>
+
+      <div class="task-filters">
+        <button class="filter-btn active" data-filter="all">All Tasks</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+        <button class="filter-btn" data-filter="high">High Priority</button>
+        <button class="filter-btn" data-filter="medium">Medium Priority</button>
+        <button class="filter-btn" data-filter="low">Low Priority</button>
+      </div>
+    </div>
+
+    <div class="task-stats">
+      <div class="stat">
+        <div class="stat-value" id="totalTasks">0</div>
+        <div class="stat-label">Total Tasks</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="activeTasks">0</div>
+        <div class="stat-label">Active</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="completedTasks">0</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="completionRate">0%</div>
+        <div class="stat-label">Completion Rate</div>
+      </div>
+    </div>
+
+    <div class="tasks-container" id="tasksContainer">
+      <div class="empty-state">
+        <i class="fas fa-clipboard-list"></i>
+        <p>No tasks yet. Add your first task above!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ad container (fixed bottom) -->
+  <div class="ad-container" id="adContainer">
+    <!-- Visible when ads don't load -->
+    <div class="ad-placeholder" id="adPlaceholder">
+      <i class="fas fa-ad" style="margin-right: 8px;"></i>
+      Advertisement Space - Google AdSense will appear here
+    </div>
+
+    <!-- Google AdSense (keep exactly as-is with your client & slot) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4742751034500907" crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-format="fluid"
+         data-ad-layout-key="-fb+5w+4e-db+86"
+         data-ad-client="ca-pub-4742751034500907"
+         data-ad-slot="7836694818"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="notificationText">Task added successfully!</span>
+  </div>
+
+  <!-- App JS -->
+  <script src="script.js"></script>
+</body>
+</html>
