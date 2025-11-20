@@ -25,6 +25,12 @@ class TaskTracker {
     this.notification = document.getElementById('notification');
     this.notificationText = document.getElementById('notificationText');
     this.adPlaceholder = document.getElementById('adPlaceholder');
+
+    // Edit modal elements
+    this.editModal = document.getElementById('editModal');
+    this.editInput = document.getElementById('editInput');
+    this.editSaveBtn = document.getElementById('editSaveBtn');
+    this.editCancelBtn = document.getElementById('editCancelBtn');
   }
 
   init() {
@@ -32,6 +38,7 @@ class TaskTracker {
     this.renderTasks();
     this.updateStats();
     this.setupAdPlaceholder();
+    this.setupEditModal();
   }
 
   setupEventListeners() {
@@ -68,7 +75,13 @@ class TaskTracker {
 
       setTimeout(() => {
         const adIns = document.querySelector('.adsbygoogle');
-        if (adIns && adIns.offsetHeight > 0) {
+        const iframe = adIns ? adIns.querySelector('iframe') : null;
+        const isFilled = adIns && (
+          adIns.getAttribute('data-ad-status') === 'filled' ||
+          (iframe && iframe.offsetHeight > 0)
+        );
+
+        if (isFilled) {
           this.hideAdPlaceholder();
           console.log('Ad loaded successfully');
         } else {
@@ -83,7 +96,10 @@ class TaskTracker {
     setTimeout(() => {
       const adElements = document.querySelectorAll('.adsbygoogle');
       adElements.forEach(ad => {
-        if (ad.offsetHeight > 0) {
+        const iframe = ad.querySelector('iframe');
+        const isFilled = ad.getAttribute('data-ad-status') === 'filled' ||
+          (iframe && iframe.offsetHeight > 0);
+        if (isFilled) {
           this.hideAdPlaceholder();
         }
       });
@@ -92,6 +108,74 @@ class TaskTracker {
 
   hideAdPlaceholder() {
     if (this.adPlaceholder) this.adPlaceholder.style.display = 'none';
+  }
+
+  setupEditModal() {
+    // Close modal on cancel
+    this.editCancelBtn.addEventListener('click', () => {
+      this.closeEditModal();
+    });
+
+    // Close modal on background click
+    this.editModal.addEventListener('click', (e) => {
+      if (e.target === this.editModal) {
+        this.closeEditModal();
+      }
+    });
+
+    // Save on Enter key
+    this.editInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        this.saveEdit();
+      }
+    });
+
+    // Save on button click
+    this.editSaveBtn.addEventListener('click', () => {
+      this.saveEdit();
+    });
+  }
+
+  openEditModal(taskId, currentText) {
+    this.editingTaskId = taskId;
+    this.editInput.value = currentText;
+    this.editModal.classList.add('show');
+    // Focus and select text for easy editing
+    setTimeout(() => {
+      this.editInput.focus();
+      this.editInput.select();
+    }, 100);
+  }
+
+  closeEditModal() {
+    this.editModal.classList.remove('show');
+    this.editInput.value = '';
+    this.editingTaskId = null;
+  }
+
+  saveEdit() {
+    const newText = this.editInput.value.trim();
+    if (!newText) {
+      this.closeEditModal();
+      return;
+    }
+
+    const task = this.tasks.find(t => t.id === this.editingTaskId);
+    if (task) {
+      task.text = newText;
+      this.saveTasks();
+      this.renderTasks();
+      this.showNotification('Task updated!', 'success');
+    }
+
+    this.closeEditModal();
+  }
+
+  editTask(id) {
+    const task = this.tasks.find(t => t.id === id);
+    if (!task) return;
+
+    this.openEditModal(id, task.text);
   }
 
   addTask() {
@@ -143,19 +227,6 @@ class TaskTracker {
     this.renderTasks();
     this.updateStats();
     this.showNotification('Task deleted!', 'success');
-  }
-
-  editTask(id) {
-    const task = this.tasks.find(t => t.id === id);
-    if (!task) return;
-
-    const newText = prompt('Edit task:', task.text);
-    if (newText && newText.trim() !== '') {
-      task.text = newText.trim();
-      this.saveTasks();
-      this.renderTasks();
-      this.showNotification('Task updated!', 'success');
-    }
   }
 
   getFilteredTasks() {

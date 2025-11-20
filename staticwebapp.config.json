@@ -1,0 +1,14 @@
+{
+  "mimeTypes": {
+    ".txt": "text/plain"
+  },
+  "routes": [
+    {
+      "route": "/ads.txt",
+      "headers": {
+        "Content-Type": "text/plain",
+        "Cache-Control": "public, max-age=3600"
+      }
+    }
+  ]
+}

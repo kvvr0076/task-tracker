@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Task Tracker - Stay Organized</title>
 
-   <!-- Google AdSense Global Code -->
-  <script async 
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4742751034500907"
-          crossorigin="anonymous"></script>
-  
+  <!-- Google AdSense Global Code -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4742751034500907"
+    crossorigin="anonymous"></script>
+
   <meta name="google-adsense-account" content="ca-pub-4742751034500907">
 
   <!-- Fonts & Icons -->
@@ -17,8 +17,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <div class="container">
     <header>
@@ -85,16 +86,8 @@
     </div>
 
     <!-- Google AdSense (keep exactly as-is with your client & slot) -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4742751034500907" crossorigin="anonymous"></script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-format="fluid"
-         data-ad-layout-key="-fb+5w+4e-db+86"
-         data-ad-client="ca-pub-4742751034500907"
-         data-ad-slot="7836694818"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+    <ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86"
+      data-ad-client="ca-pub-4742751034500907" data-ad-slot="7836694818"></ins>
   </div>
 
   <!-- Toast Notification -->
@@ -103,7 +96,20 @@
     <span id="notificationText">Task added successfully!</span>
   </div>
 
+  <!-- Edit Modal -->
+  <div class="modal" id="editModal">
+    <div class="modal-content">
+      <h3>Edit Task</h3>
+      <input type="text" class="modal-input" id="editInput" placeholder="Enter task text">
+      <div class="modal-actions">
+        <button class="modal-btn cancel" id="editCancelBtn">Cancel</button>
+        <button class="modal-btn save" id="editSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
   <!-- App JS -->
   <script src="script.js"></script>
 </body>
+
 </html>
