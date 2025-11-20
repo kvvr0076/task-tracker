@@ -24,7 +24,6 @@ class TaskTracker {
 
     this.notification = document.getElementById('notification');
     this.notificationText = document.getElementById('notificationText');
-    this.adPlaceholder = document.getElementById('adPlaceholder');
 
     // Edit modal elements
     this.editModal = document.getElementById('editModal');
@@ -37,7 +36,6 @@ class TaskTracker {
     this.setupEventListeners();
     this.renderTasks();
     this.updateStats();
-    this.setupAdPlaceholder();
     this.setupEditModal();
   }
 
@@ -65,49 +63,14 @@ class TaskTracker {
       }
     });
 
-    // On load try push ads + hide placeholder if loaded
+    // On load try push ads (standard AdSense init)
     window.addEventListener('load', () => {
       try {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (e) {
         console.log('AdSense initialization error:', e);
       }
-
-      setTimeout(() => {
-        const adIns = document.querySelector('.adsbygoogle');
-        const iframe = adIns ? adIns.querySelector('iframe') : null;
-        const isFilled = adIns && (
-          adIns.getAttribute('data-ad-status') === 'filled' ||
-          (iframe && iframe.offsetHeight > 0)
-        );
-
-        if (isFilled) {
-          this.hideAdPlaceholder();
-          console.log('Ad loaded successfully');
-        } else {
-          console.log('Ad did not load - placeholder visible');
-        }
-      }, 2000);
     });
-  }
-
-  setupAdPlaceholder() {
-    // Secondary check to hide placeholder if ad shows later
-    setTimeout(() => {
-      const adElements = document.querySelectorAll('.adsbygoogle');
-      adElements.forEach(ad => {
-        const iframe = ad.querySelector('iframe');
-        const isFilled = ad.getAttribute('data-ad-status') === 'filled' ||
-          (iframe && iframe.offsetHeight > 0);
-        if (isFilled) {
-          this.hideAdPlaceholder();
-        }
-      });
-    }, 3000);
-  }
-
-  hideAdPlaceholder() {
-    if (this.adPlaceholder) this.adPlaceholder.style.display = 'none';
   }
 
   setupEditModal() {
